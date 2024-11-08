@@ -159,7 +159,7 @@ LAVD now enables autopilot by default.
 :::
 
 ```sh
-# Autopower can be activated by the following flags:
+# Autopower can be activated by the following flag:
 --autopower
 # e.g:
 scx_lavd --autopower

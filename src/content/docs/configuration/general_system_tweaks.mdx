@@ -250,3 +250,18 @@ In order to revert this change. **Remove** cachyos-kde-settings:
 ```sh
 sudo pacman -R cachyos-kde-settings
 ```
+
+10\. Granting Realtime Privileges for the User
+---------------------------------
+
+:::note
+Strongly recommended for Pipewire. This mitigates a lot of the common issues such as audio glitching or cutting out in certain scenarios.
+:::
+
+```sh
+# Install the following package:
+sudo pacman -S realtime-privileges
+# Run the following command:
+sudo gpasswd -a $USER realtime
+# Reboot your system.
+```

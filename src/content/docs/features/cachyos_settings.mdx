@@ -65,7 +65,7 @@ applications
 - **`game-performance`** - Wrapper script for `powerprofilesctl` to switch to performance profile on-demand.
 See [Power Profile Switching On Demand](/configuration/gaming#power-profile-switching-on-demand)
 - **`kerver`** - QoL script to show information about the current kernel
-- **`ksmctl`** - Utility to enable merging same memory pages into one for better performance and lower memory usage. **Adds a significant CPU overhead**
+- **`ksmctl`** - Utility to enable merging same memory pages into one to decrease memory usage at the cost of some CPU overhead. **Don't expect huge savings**
 
     <Tabs>
         <TabItem label="Enable Kernel Samepage Merging">
@@ -110,5 +110,3 @@ database
 - Set Transparent Hugepage Defrag to `defer+madvise`
 - [ananicy-cpp](https://gitlab.com/ananicy-cpp/ananicy-cpp) with [community-maintained rulesets](https://github.com/CachyOS/ananicy-rules)
 - [ZRAM Generator](https://github.com/CachyOS/CachyOS-Settings/blob/master/usr/lib/systemd/zram-generator.conf) - Sets ZRAM to the same size as RAM and use ZSTD for compression
-
-

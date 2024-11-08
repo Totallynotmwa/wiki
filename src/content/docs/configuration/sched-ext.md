@@ -154,12 +154,15 @@ utilization).
 
 Autopower: Automatically decide the scheduler's power mode based on the system's energy profile aka EPP (Energy Performance Preference).
 
+:::note
+LAVD now enables autopilot by default.
+:::
+
 ```sh
-# Autopilot and Autopower can be activated by the following flags:
---autopilot
+# Autopower can be activated by the following flags:
 --autopower
-# e.g: 
-scx_lavd --autopilot
+# e.g:
+scx_lavd --autopower
 ```
 
 ## FAQ

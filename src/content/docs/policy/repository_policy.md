@@ -25,19 +25,22 @@ ArcoLinux
 Parabola
 Any other Linux distribution not explicitly mentioned in the "Authorized Users" section
 
-## 4. Compliance and Monitoring
+# 4.Mirror
+It is allowed to mirror the repository via rsync and syncthing and provide it with a webserver.
+
+## 5. Compliance and Monitoring
 
 We reserve the right to monitor the usage of our repository to ensure compliance with this policy. Any unauthorized use may result in access being revoked.
 
-## 5. Reporting Violations
+## 6. Reporting Violations
 
 If you suspect that this policy is being violated, please report it to us at [admin@cachyos.org].
 
-## 6. Policy Changes
+## 7. Policy Changes
 
 CachyOS reserves the right to modify this policy at any time. Changes will be communicated through our official channels.
 
-## 7. Contact Information
+## 8. Contact Information
 
 For any questions or concerns regarding this policy, please contact us at:
 

@@ -26,7 +26,7 @@ Parabola
 Any other Linux distribution not explicitly mentioned in the "Authorized Users" section
 
 # 4.Mirror
-It is allowed to mirror the repository via rsync and syncthing and provide it with a webserver.
+It is allowed to mirror the repository via rsync and syncthing. Third-party mirrors are permitted to mirror the repository and provide a web server for it, as long as they ensure that the repository data remains unchanged.
 
 ## 5. Compliance and Monitoring
 

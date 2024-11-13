@@ -43,7 +43,7 @@ Depending on what [Boot Manager](/installation/boot_managers/) you have decided 
 
 <Tabs>
 
-<TabItem label='systemd-boot'>
+<TabItem label='systemd-boot & rEFInd'>
 
 <Steps>
 
@@ -114,50 +114,6 @@ Depending on what [Boot Manager](/installation/boot_managers/) you have decided 
 10. Setup your login credentials.
 
 11. Review the installation summary on the Overview Page carefully. If all the settings look correct for you, proceed with the installation by clicking ***Install Now***. Otherwise, go back and make any necessary changes.
-
-</Steps>
-
-</TabItem>
-
-<TabItem label='rEFInd'>
-
-<Steps>
-
-1. Boot into the ISO and click the **Launch Installer** button
-
-2. Set your preferred **Language** and **Region/Timezone**.
-
-3. Configure your **Keyboard Layout**.
-
-4. Select **Manual partitioning**.
-
-5. Create a new partition with the following:
-    * Size: ***At least 100MiB***
-    * Filesystem: ***FAT32***
-    * Mount point: ***/boot/efi***
-    * Flags: **boot**
-
-6. Create another partition:
-    * Size: ***2048MiB***
-    * Filesystem: ***EXT4***
-    * Mount point: ***/boot***
-    * Flags:
-
-7. Create another partition for ***root***:
-    * Size: ***At least 20000MiB***
-    * Filesystem: Any, refer [Filesystem](/installation/filesystem)
-    * Mount point: ***/***
-    * Flags:
-
-8. Double check that ***Install boot loader on:*** is pointing to /boot/efi
-
-9. Pick the **Desktop Environment** you'd like to use, see [Desktop Environments](/installation/desktop_environments).
-
-10. Select the specific packages you wish to install from the provided list, and deselect any that you do not require.
-
-11. Setup your login credentials.
-
-12. Review the installation summary on the Overview Page carefully. If all the settings look correct for you, proceed with the installation by clicking on ***Install Now***. Otherwise, go back and make any necessary changes.
 
 </Steps>
 

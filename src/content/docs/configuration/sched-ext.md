@@ -83,27 +83,38 @@ These schedulers are in constant development while being tested, so expect some 
 
 Feel free to report any issue or feedback to their [GitHub](/configuration/sched-ext#github) referenced below.
 
-### [scx_rusty](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_rusty>)
+### [scx_bpfland](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_bpfland>)
 
-**Developed by: David Vernet (Byte-Lab [GitHub](<https://github.com/Byte-Lab>))**
+**Developed by: Andrea Righi (arighi [GitHub](<https://github.com/arighi>))**
 
-Being one of the heaviest schedulers yet released on sched-ext, it comes with a lot of features that add to his flexibility and capability. Tunability is one of them so you can adjust Rusty to your desires and use case.
+A vruntime-based sched_ext scheduler that prioritizes interactive workloads. Highly flexible and easy to adapt, a deadline-based behavior can be achieved when lowlatency mode is enabled.
+
+Bpfland when making decisions on which cores to use, it takes in consideration their cache layout and which cores share the same L2/L3 cache leading to fewer cache misses = more performance.
+
+**Use cases:**
+
+- Gaming 
+- Desktop usage
+- Multimedia/Audio production
+- Great interactivity under intensive workloads
+- Power saving
+
+### [scx_flash](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_flash>)
+
+:::note
+For now, it's only included in scx-scheds-git.
+:::
+
+**Developed by: Andrea Righi (arighi [GitHub](<https://github.com/arighi>))**
+
+A scheduler that focuses on ensuring fairness among tasks and performance predictability. This scheduler is introduced as a replacement of the "lowlatency" mode in scx_bpfland.
 
 **Use cases:**
 
 - Gaming
-- Latency sensitive workloads
-- Desktop usage
-- Multimedia/Audio production
-- Latency sensitive workloads
-- Great interactivity under intensive workloads
-- Power saving
-
-For more information about what can be done with Rusty and his tunable flags. Check out the help page:
-
-```text
-scx_rusty --help
-```
+- Latency sensitive workloads such as multimedia or real-time audio processing
+- Need for responsiveness under over-stressed situations
+- Consistency in performance
 
 ### [scx_lavd](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_lavd>)
 
@@ -127,22 +138,27 @@ overall good throughput and fair use of CPU time among tasks.***
 
 One of the main and awesome capabilities that LAVD includes is **Core Compaction.** which without going into technical details: When CPU usage < 50%, Currently active cores will run for longer and at a higher frequency. Meanwhile Idle Cores will stay in C-State (Sleep) for a much longer duration achieving less overall power usage.
 
-### [scx_bpfland](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_bpfland>)
+### [scx_rusty](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_rusty>)
 
-**Developed by: Andrea Righi (arighi [GitHub](<https://github.com/arighi>))**
+**Developed by: David Vernet (Byte-Lab [GitHub](<https://github.com/Byte-Lab>))**
 
-A vruntime-based sched_ext scheduler that prioritizes interactive workloads. Highly flexible and easy to adapt, a deadline-based behavior can be achieved when lowlatency mode is enabled.
-
-Bpfland when making decisions on which cores to use, it takes in consideration their cache layout and which cores share the same L2/L3 cache leading to fewer cache misses = more performance.
+Being one of the heaviest schedulers yet released on sched-ext, it comes with a lot of features that add to his flexibility and capability. Tunability is one of them so you can adjust Rusty to your desires and use case.
 
 **Use cases:**
 
 - Gaming
 - Latency sensitive workloads
 - Desktop usage
-- Multimedia/Audio production (Thanks to the low latency mode)
+- Multimedia/Audio production
+- Latency sensitive workloads
 - Great interactivity under intensive workloads
 - Power saving
+
+For more information about what can be done with Rusty and his tunable flags. Check out the help page:
+
+```text
+scx_rusty --help
+```
 
 ## General recommendations
 
@@ -201,6 +217,10 @@ Options:
 Mainly because they are (for now) multipurpose schedulers, meaning they adapt to many workloads even if they don't excel at all of them.
 
 In order to find out which one fits you best, there is no other shortcut than to test it yourself.
+
+### I'm missing a scheduler that some users are mentioning or testing in the Discord server
+
+The reason behind is probably because these schedulers are being tested therefore they're only included as a cherry pick in the scx-scheds-git package instead of the stable version.
 
 ## Learn More
 

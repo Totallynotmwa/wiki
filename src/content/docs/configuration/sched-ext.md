@@ -87,7 +87,7 @@ Feel free to report any issue or feedback to their [GitHub](/configuration/sched
 
 **Developed by: Andrea Righi (arighi [GitHub](<https://github.com/arighi>))**
 
-A vruntime-based sched_ext scheduler that prioritizes interactive workloads. Highly flexible and easy to adapt, a deadline-based behavior can be achieved when lowlatency mode is enabled.
+A vruntime-based sched_ext scheduler that prioritizes interactive workloads. Highly flexible and easy to adapt.
 
 Bpfland when making decisions on which cores to use, it takes in consideration their cache layout and which cores share the same L2/L3 cache leading to fewer cache misses = more performance.
 

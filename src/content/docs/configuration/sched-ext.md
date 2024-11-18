@@ -101,10 +101,6 @@ Bpfland when making decisions on which cores to use, it takes in consideration t
 
 ### [scx_flash](<https://github.com/sched-ext/scx/tree/main/scheds/rust/scx_flash>)
 
-:::note
-For now, it's only included in scx-scheds-git.
-:::
-
 **Developed by: Andrea Righi (arighi [GitHub](<https://github.com/arighi>))**
 
 A scheduler that focuses on ensuring fairness among tasks and performance predictability. This scheduler is introduced as a replacement of the "lowlatency" mode in scx_bpfland.

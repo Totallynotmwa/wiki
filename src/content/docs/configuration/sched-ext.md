@@ -177,6 +177,15 @@ LAVD now enables autopilot by default.
 scx_lavd --autopower
 ```
 
+### Disable ananicy-cpp
+
+- When using any of the schedulers from the sched-ext framework, it's strongly advised to disable and avoid ananicy-cpp due to causing conflicts because it amplifies the priority gap that the scheduler is already creating/handling by boosting interactive tasks creating an excessive prioritization starving other tasks increasing the chance of hitting the sched_ext watchdog timeout kicking the running scheduler aka causing an stall.
+
+In order to disable/stop ananicy-cpp, run the following command:
+```sh
+systemctl disable --now ananicy-cpp
+```
+
 ## FAQ
 
 ### Why X scheduler performs worse than the other?

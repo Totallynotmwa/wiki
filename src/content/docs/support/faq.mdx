@@ -29,6 +29,13 @@ You can also achieve this by using **"Remove db lock"** in CachyOS Hello in the 
 :::
 
 ### How can I fix possible keyring issues in CachyOS?
+
+```code
+# Example:
+:: File /var/cache/pacman/pkg/python-charset-normalizer-3.4.0-1-any.pkg.tar.zst
+is corrupted (invalid or corrupted package (PGP signature)). 
+```
+
 ```sh
 sudo rm -rf /etc/pacman.d/gnupg/
 sudo pacman-key --init
@@ -41,7 +48,9 @@ sudo rm -R /var/lib/pacman/sync
 ```
 
 ### How can I remove those annoying warnings while updating my system? Is it safe to update the system when this happens?
-`warning: X package: local(1.0.1-1.1) is newer than Y repo (1.0.1-1)`
+
+Example:
+
 <MultipleImageComponent images={[import('~/assets/images/update-warnings.png')]} />
 
 Yes, it is safe to update the system.

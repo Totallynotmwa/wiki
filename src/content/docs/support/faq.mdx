@@ -19,17 +19,16 @@ We recommend installing CachyOS in a VM for testing out different desktop enviro
 used for installation and recovering a broken install via [cachy-chroot](https://github.com/CachyOS/cachy-chroot).
 
 ## Software management FAQ
-Here are all the questions related to the management of software on your system.
 
 ### How can I fix the "unable to lock database" error in CachyOS?
 ```sh
 sudo rm /var/lib/pacman/db.lck
 ```
 :::tip
-You can also achieve this using "Remove db lock" in CachyOS Hello.
+You can also achieve this by using **"Remove db lock"** in CachyOS Hello in the **Apps/Tweaks** tab.
 :::
 
-### How can I fix possible keyrings issues in CachyOS?
+### How can I fix possible keyring issues in CachyOS?
 ```sh
 sudo rm -rf /etc/pacman.d/gnupg/
 sudo pacman-key --init
@@ -51,3 +50,62 @@ To remove these errors, run the following command:
 ```sh
 sudo pacman -Syuu
 ```
+
+### When trying to install a package with pacman i received the following error
+
+```code
+# Example
+sudo pacman -S telegram-desktop    
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (4) libdbusmenu-qt5-0.9.3+16.04.20160218-5  qt5-imageformats-5.15.2-1
+             ttf-opensans-1.101-2  telegram-desktop-2.5.1-1
+
+Total Download Size:   24.10 MiB
+Total Installed Size:  67.51 MiB
+
+:: Proceed with installation? [Y/n] Y
+:: Retrieving packages...
+error: failed retrieving file 'telegram-desktop-2.5.1-1-x86_64.pkg.tar.zst' from archlinux.mailtunnel.eu : The requested URL returned error: 404
+```
+
+This means that your local database is outdated therefore the package you're asking for can't be downloaded. Run the following command to update your local database:
+
+```sh
+sudo pacman -Sy
+# Then try to install the package you want again.
+```
+
+### What does -bin means at the end of a package name? For example librewolf-bin
+
+This means that you're downloading/installing a prebuilt package therefore you don't need to compile or build it.
+In our repositories we store some bin packages which are basically mirrors that you can download from the AUR.
+
+### When I try to open Discord, a window opens notifying me of an update
+
+Example:
+
+<MultipleImageComponent images={[import('~/assets/images/discord-update.png')]} />
+
+This is because Discord released an update that is yet not available or it hasn't been built in any of the pacman mirrors, therefore you get stuck
+unable to use Discord. In order to get around this issue, follow [Arch Wiki's fix guide](<https://wiki.archlinux.org/title/Discord#Discord_asks_for_an_update_not_yet_available_in_the_repository>).
+
+
+### I got an error while trying to clear pacman cache
+
+:::tip
+You can also clear pacman's cache using CachyOS Hello in **Apps/Tweaks** > **Clear package cache**
+:::
+
+Example:
+
+<MultipleImageComponent images={[import('~/assets/images/pacman-cache-error.png')]} />
+
+This usually appears when they're some orphans packages left in `/var/cache/pacman/pkg` which pacman can't delete. Run the following command to fix it.
+
+```sh
+# Removes all the orphans stored in pkg cache.
+sudo rm -r /var/cache/pacman/pkg/*
+```
+

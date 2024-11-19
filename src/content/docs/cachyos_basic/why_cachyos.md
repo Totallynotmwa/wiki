@@ -3,19 +3,19 @@ title: Why CachyOS?
 description: Why CachyOS may be better for you
 ---
 
-CachyOS offers a polished Arch experience, complete with a user-friendly installer, pre-configured desktops, performance optimizations without compromising the user experience.
+CachyOS offers a polished Arch experience, complete with a user-friendly installer, pre-configured desktops, performance optimizations without compromising the user experience and security of the system.
 
-Besides performance changes, we provide a ready to go setup for NVIDIA GPUs, ZFS which is built into some of our kernels and miscellaneous tools
+Besides performance changes, we provide a ready to go setup for NVIDIA GPUs, ZFS which is built into some of our kernels and miscellaneous tools.
 
 ## Optimized Packages and Repositories
 
-CachyOS offers optimized packages for various hardware configurations, including x86-64, x86-64-v3, x86-64-v4, and Zen4 to enhance performance and reduce latency.
+CachyOS offers optimized packages for various hardware configurations, including x86-64, x86-64-v3, x86-64-v4, and Zen 4 to enhance performance and reduce latency.
 
 Check out [this](/features/optimized_repos) page for a more detailed explanation of the optimized repositories that we provide.
 
 ## Advanced CPU Scheduler Support
 
-Firstly let's understand what a CPU scheduler is. In the Linux kernel, the CPU scheduler is a crucial component
+Firstly let's understand what a CPU scheduler is. In the Linux Kernel, the CPU scheduler is a crucial component
 that manages how tasks (or processes) are executed on the system. It decides which task should run next,
 ensuring efficient use of system resources to allow multiple tasks to run simultaneously.
 
@@ -39,16 +39,16 @@ Selecting multiple desktop environments is not allowed due to possible breakage.
 ## User Friendly OS
 
 By default, we provide our own applications, such as CachyOS Hello or CachyOS Package Installer
-among others to simplify and enhance your Linux experience. For example, CachyOS Hello provides options to update your system, enable services and rank the mirrors. Package Installer will help you to install packages.
-CachyOS also has a really good and friendly Discord community that helps each other. Join us at [Discord](https://discord.com/invite/cachyos-862292009423470592) or our [forum](https://discuss.cachyos.org/)
+among others to simplify and enhance your Linux experience. For example, CachyOS Hello provides options to update your system, enable services and rank the mirrors. Package Installer will help you to install packages. Also some tweaks and quick access for fixes to the most common issues found in Arch e.G: removing pacman's db lock.
+CachyOS has a really good and friendly Discord community that like to help and assist each other. Join us at [Discord](https://discord.com/invite/cachyos-862292009423470592) or our [forum](https://discuss.cachyos.org/)
 
 CachyOS Applications
+
 --------------------
 
-- **Cachy Browser**: Browser based on Firefox, with a more secure config and patches from Gentoo and Librewolf.
-- **cachyos-kernel-manager**: Easily install kernels from the repository or configure your own kernel and include your own patches.
+- **Cachy Browser**: Browser based on Firefox, with a more secure config and patches from Gentoo + Performance optimizations.
+- **cachyos-kernel-manager**: Easily install kernels from the repository or configure your own kernel and include your own patches and even manage the sched-ext framework via the [scx_loader](<https://github.com/sched-ext/scx/tree/main/rust/scx_loader>).
 - **CachyOS Hello**: Application for controlling tweaks, applying fixes, package installation and more information about CachyOS.
 - **CachyOS-ApplicationInstaller**: GUI for an easy installation of commonly used applications.
 - **cachyos-rate-mirrors**: Automatically rank Arch and CachyOS mirrors for optimal download speeds.
 - **systemd-boot-manager**: Automatically generates new entries for the systemd-boot-manager and can be easily configured in `/etc/sdboot-manage.conf`.
-

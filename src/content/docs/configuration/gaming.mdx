@@ -19,7 +19,7 @@ sudo pacman -S cachyos-gaming-meta
 ```
 
 :::note
-The `cachyos-gaming-meta` package installs the following [packages](https://github.com/CachyOS/CachyOS-PKGBUILDS/blob/master/cachyos-gaming-meta/PKGBUILD). *If you find that it is missing any packages, feel free to let the CachyOS team know.*
+The `cachyos-gaming-meta` package installs the following [packages](https://github.com/CachyOS/CachyOS-PKGBUILDS/blob/master/cachyos-gaming-meta/PKGBUILD#L10). *If you find that it is missing any package, feel free to let the CachyOS team know.*
 :::
 
 ## Steam
@@ -122,14 +122,26 @@ has similar behavior but it should not be used as CachyOS ships with [`ananicy-c
 Proton-CachyOS is based on proton-experimental and applies a bunch of patches on top of it:
 - Wine-staging patches
 - Wine Fullscreen FSR
-- Reflex support for Wine and DXVK
-- Wineserver gets LTO'd at compilation
+- Reflex support for Wine
+- Support for umu-launcher
 
-In addition, proton-cachyos is compiled against native system libraries and compiler instructions, which can further improve performance
+In addition, proton-cachyos is compiled against native system libraries and compiler instructions which can further improve performance
 
 ### Wine-CachyOS
 
 This is a solution similar to proton-cachyos, but as standalone version, which can be used by Lutris, Heroic, Bottles and others or even as a system-wide wine solution.
+
+- Based on Valve's bleeding-edge Wine
+- Adds early hotfixes/workarounds for games 
+- protonfixes
+- Support for umu-launcher
+
+**QoL Modifications**
+
+- WINE_WMCLASS: env variable to set the wm class of all wine windows, allowing the wm to control the window through rules.
+- WINEUSERSANDBOX: env variable to disable creating symlinks from Wine folders such as Documents/Pictures etc, to the equivalent folders in the user's directory
+- Disabled Native Window Decorations
+- Changes for optimizing Wine's performance similar as we do with proton-cachyos
 
 ## Bottles
 
@@ -138,19 +150,21 @@ Bottles is an application that allows you to easily manage Windows prefixes on y
 Bottles can also make use of different runners like Lutris and are all manageable within the application. Bottles offers the option of a gaming-oriented prefix.
 You can also install dependencies, add EXE files, and use their one-click installers for gaming-related apps like EA App or Battle.net.
 
-To install Bottles, run the following command in your terminal:
-```sh
+```sh title="How to install Bottles"
+# Open a terminal and run the following command:
 sudo pacman -S bottles
 ```
+
 If you want to know more about it, check out their [documentation](https://docs.usebottles.com/).
 
 ## Lutris
-Lutris serves as a central hub for all your games on CachyOS. With Lutris, you can efficiently manage your game runners, including Wine, Proton, and emulators. You can even customize their parameters! To install Lutris, execute the following command in your terminal:
-```sh
+Lutris serves as a central hub for all your games on CachyOS. With Lutris, you can efficiently manage your game runners, including Wine, Proton, and emulators. You can even customize their parameters!
+
+```sh title="How to install Lutris"
+# Open a terminal and run the following command:
 sudo pacman -S lutris
 ```
-## Lutris guide
-Example on how to install the [Epic Games Store](https://lutris.net/games/epic-games-store/) inside Lutris on CachyOS.
+## Lutris Guide
 
 ### 1. Set the proper Wine runner
 Many games perform optimally with the Proton-GE runner, so it's advisable to configure it before installing anything else.
@@ -168,7 +182,7 @@ Yes, you can even sign into the [Epic Games Store](https://lutris.net/games/epic
 - You can launch games through Lutris simply by clicking the **Play button**.
 - You can also launch a store using the **Play button** and then run games from within the store, just like you do on Windows.
 
-### FAQ (WIP)
+### FAQ
 - **How can i add a parameter when launching a game? For example -dx11**
 
     Right click on the game icon > Configure > Game options > Arguments
@@ -176,15 +190,19 @@ Yes, you can even sign into the [Epic Games Store](https://lutris.net/games/epic
     
     Yes. Look [here](/configuration/gaming#how-to-add-game-performance-to-steam-lutris-heroic-games-launcher-and-bottles)
 
+- **How can i use wine-cachyos in Lutris?**
+
+    In the **Runner Options** > **Wine version** it appears named as `System 9.0 Staging Default`
+
 ### Games stores
 - [Epic Games Store](https://lutris.net/games/epic-games-store/)
 - [Ubisoft Connect](https://lutris.net/games/ubisoft-connect/)
 - [GOG Galaxy](https://lutris.net/games/gog-galaxy/)
 
-## Raytracing
-The Arch Wiki has already provides comprehensive instructions on how to enable [raytracing](https://wiki.archlinux.org/title/Hardware_raytracing) for various hardware platforms.
-- [Raytracing on the NVIDIA](https://wiki.archlinux.org/title/Hardware_raytracing#NVIDIA)
-- [Raytracing on the AMD](https://wiki.archlinux.org/title/Hardware_raytracing#AMD)
-- [Raytracing on the Intel](https://wiki.archlinux.org/title/Hardware_raytracing#Intel)
+## Ray tracing Support
+The Arch Wiki has already provides comprehensive instructions on how to enable [ray tracing](https://wiki.archlinux.org/title/Hardware_raytracing) for various hardware platforms.
+- [Ray tracing on NVIDIA](https://wiki.archlinux.org/title/Hardware_raytracing#NVIDIA)
+- [Ray tracing on AMD](https://wiki.archlinux.org/title/Hardware_raytracing#AMD)
+- [Ray tracing on Intel](https://wiki.archlinux.org/title/Hardware_raytracing#Intel)
 
 **With this guide, you are now ready to start gaming on CachyOS. Enjoy!**

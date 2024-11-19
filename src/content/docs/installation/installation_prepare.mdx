@@ -12,40 +12,60 @@ import ImageComponent from '~/components/image-component.astro';
 
 ## System Requirements
 
-Before you begin with the preparation for installation, you need to make sure that your computer meets the following system requirements in order to run CachyOS:
+Before you begin with the preparation for installation, you need to make sure that your computer meets the following system requirements in order to run CachyOS.
 
-### Minimum 
+<Tabs>
+
+<TabItem label="Minimum requirements">
 
 *   3 GB RAM
 *   30 GB of Storage Space (HDD/SSD)
-*   Dual Core processor (64-bit)
+*   [x86-64-v1 capable CPU](/installation/installation_prepare#x86_64-v1-compatible-cpus) (64-bit)
 *   Integrated graphics card
 *   Stable internet connection
 
-### Recommended 
+:::note
+An unstable internet can lead to installation issues and long waits.
+:::
 
-*   4 GB RAM 
+</TabItem>
+
+<TabItem label="Recommended requirements">
+
+*   4 GB RAM (Ideally 8GB and more)
 *   50 GB of Storage Space (SSD/NVMe)
-*   **x86-64-v3** capable CPU (non v3 CPUs e.g AMD FX Series or an Intel i3 2100 can be used too)
+*   [**x86-64-v3 & v4 capable CPU**](/installation/installation_prepare#x86_64-v3-compatible-cpus)
 *   50 Mbps or better internet speed
 *   NVIDIA GPU (900+ - e.g: GTX 950), AMD +GCN 1.0 (e.g: AMD R7 240) or Intel (Integrated HD Graphics series or higher. Arc Series)
 
-### x86_64 Microarchitecture Level Support
+</TabItem>
 
-***x86_64-v3 Compatible CPUs:***
+</Tabs>
 
-- **Intel**
-  - Haswell and later generations (e.g., Broadwell, Skylake, Coffee Lake, Cascade Lake, Ice Lake, Tiger Lake, Alder Lake, Raptor Lake, Meteor Lake, Lunar Lake)
-- **AMD**
-  - Ryzen 1st, 2nd, 3rd, 4th, 5th, 7th, and 9th generations
-  - EPYC 1st-3rd Gen
+## x86_64 Microarchitecture Level Support
 
-***x86_64-v4 Compatible CPUs:***
+### ***x86_64-v1 Compatible CPUs***
 
 - **Intel**
-  - Knights Landing (Xeon Phi x200), Knights Mill (Xeon Phi x205), Skylake-SP, Skylake-X, Cannon Lake, Cascade Lake, Cooper Lake, Ice Lake, Rocket Lake, Tiger Lake and Sapphire Rapids
+   - Anything older than Haswell. For example: **Intel 3770k, Intel N2600**
+- AMD
+   - Anything older than Zen. For example: **AMD FX Series**
+
+
+### ***x86_64-v3 Compatible CPUs***
+
+- **Intel**
+  - Haswell and later generations **(e.g., Broadwell, Skylake, Coffee Lake, Cascade Lake, Ice Lake, Tiger Lake, Alder Lake, Raptor Lake, Meteor Lake, Lunar Lake)**
 - **AMD**
-  - Zen 4, Zen 5, AMD EPYC 4th Generation (Genoa) and 5th Generation (Siena)
+  - **Ryzen 1st, 2nd, 3rd, 4th, 5th, 7th, and 9th generations**
+  - **EPYC 1st-3rd Gen**
+
+### ***x86_64-v4 Compatible CPUs***
+
+- **Intel**
+  - **Knights Landing (Xeon Phi x200), Knights Mill (Xeon Phi x205), Skylake-SP, Skylake-X, Cannon Lake, Cascade Lake, Cooper Lake, Ice Lake, Rocket Lake, Tiger Lake and Sapphire Rapids**
+- **AMD**
+  - **Zen 4, Zen 5, AMD EPYC 4th Generation (Genoa) and 5th Generation (Siena)**
 
 ## Creating a Bootable CachyOS USB Drive
 

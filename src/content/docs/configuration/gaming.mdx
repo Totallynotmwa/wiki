@@ -6,44 +6,70 @@ description: 'It covers essential package installation, Steam gaming with Proton
 import MultipleImageComponent from '~/components/multiple-images-component.astro';
 import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-Welcome to the world of gaming on CachyOS, a leading Arch-based distribution! This guide will help you get started with playing your favorite games on this operating system.
+Welcome to the guide for Gaming in CachyOS. We'll guide you through the essentials aspects on how to setup everything and have a great experience.
 
 ## Prerequisites
+
 Before we dive into the fun stuff, it is essential to ensure that your graphics card drivers are installed and working properly. If your graphics card is not functioning optimally, you won't be able to play games properly.
 
-## Essential Packages
-To make things easier for you, CachyOS has grouped all the necessary packages for gaming into one meta package. This makes the installation process faster and easier. Simply run the following command in your terminal:
+### Essential Packages
+
+To make things easier for you, CachyOS has grouped all the necessary packages for gaming into one meta package that includes all the known stores and extras for gaming in Linux. This makes the installation and setup process for gaming faster and less convoluted for everyone.
+
+Simply run the following command in your terminal:
 
 ```sh
 sudo pacman -S cachyos-gaming-meta
 ```
 
 :::note
-The `cachyos-gaming-meta` package installs the following [packages](https://github.com/CachyOS/CachyOS-PKGBUILDS/blob/master/cachyos-gaming-meta/PKGBUILD#L10). *If you find that it is missing any package, feel free to let the CachyOS team know.*
+The `cachyos-gaming-meta` package installs all the important libraries, packages, plugins, stores such as Steam, Lutris and some tools which are necessary for most games to run and work properly. Check out the [package list](https://github.com/CachyOS/CachyOS-PKGBUILDS/blob/master/cachyos-gaming-meta/PKGBUILD#L10) for more information on what is installing.
+
+*If you find that there is missing any package, feel free to let the CachyOS team know.*
 :::
 
 ## Steam
-For Steam users, playing games on CachyOS is a breeze! Simply open Steam and select the Proton option, and you're ready to enjoy your games.
+
+For Steam users, playing games on CachyOS is a breeze! Simply open Steam and follow the [Proton guide](/configuration/gaming#how-to-enable-proton-support-in-steam), and you're ready to enjoy your games.
+
 :::note
-Notebook users with NVIDIA GPUs should refer to the following guide: [NVIDIA PRIME Render Offload](https://wiki.cachyos.org/configuration/dual_gpu/)
+Laptop users with discrete NVIDIA GPUs should refer to the following [guide](https://wiki.cachyos.org/configuration/dual_gpu/)
 :::
 
-## Proton
-Don't worry, Proton is very simple! In just a few clicks, you can have it set up and ready to use. Check out the screenshots below for a step-by-step guide.
+### How to enable Proton support in Steam
+
+Don't worry, setting up Steam with Proton is very simple! In just a few clicks, you can have it set up and ready to use. Check out the screenshots below for a step-by-step guide.
 
 <MultipleImageComponent images={[import('~/assets/images/Steam1_Screenshot_20230907_071249.png'), import('~/assets/images/Steam2_Screenshot_20230907_071521.png'), import('~/assets/images/Steam3_Screenshot_20230907_072849.png'), import('~/assets/images/Steam4_Screenshot_20230907_072236.png')]} />
 
-You can use Proton to play your Windows games on Linux.
-:::note
-To check if your game is compatible with Linux, visit [proton-db](https://www.protondb.com/).
-:::
 :::tip
-CachyOS provides various Proton versions for improved performance, including `proton-cachyos`, `proton-ge-custom`, `proton-tkg-git`, and the official Proton versions `proton-experimental` and `proton`.
+CachyOS provides various Proton versions that we build & maintain for further performance improvements:
+- `proton-cachyos` `(included in the cachyos-gaming-meta package)` being the one that we develop with added QoL changes + cherry picked patches + compilation optimizations `(x86-64-v3 & x86-64-v4)`
+- `proton-ge-custom`, `proton-tkg-git`, `proton-experimental` and `proton stable releases` are built against native libs.
+- `proton-ge-custom-bin` pulled from AUR. 
 :::
 
-## Performance
+:::tip
+To check if your game is compatible or how does it run with Linux, visit [proton-db](https://www.protondb.com/).
+:::
+
+## Steam Proton FAQ
+
+### Which Proton version should i use in Steam?
+
+- [`proton-cachyos`](https://github.com/CachyOS/proton-cachyos) Being the one that we build and maintain is highly recommended unless it has an issue with the game you want to play. Should work in most cases.
+- `Proton Experimental` Bleeding edge release from `Valve` If the game you want to play is relatively new or it doesn't work well with the current Proton stable release or perhaps you saw people recommending it in [ProtonDB](https://www.protondb.com/).
+- `Proton 9.0.3 or lower` Stable releases from `Valve`. If the game you want to play only works in a previous Proton release.
+- `Proton-GE` Build made by [GloriousEggroll](https://github.com/GloriousEggroll/proton-ge-custom) in some cases it comes in handy.
+
+### What is proton-cachyos? 
+
+Check out this [explanation about it.](/configuration/gaming#proton-cachyos)
+
+## Performance tips
 
 ### Power Profile Switching on Demand
+
 :::note
 This behavior is slightly different with `intel_pstate`. On Intel, the governor remains at powersave but the
 EPP/EPB values are set to performance.
@@ -51,7 +77,7 @@ EPP/EPB values are set to performance.
 
 CachyOS provides a wrapper script [`game-performance`](https://github.com/CachyOS/CachyOS-Settings/blob/master/usr/bin/game-performance)
 which uses `power-profiles-daemon` to temporarily switch the current power profile to `performance`.
-The `performance` profile increases the system's power levels and changes the CPU governor to performance.
+The `performance` profile increases the system power levels and changes the CPU governor to performance.
 
 When this script is used to run a game, the system will be set to use the `performance` profile as long as the game is running.
 The previously used power profile will be restored once the game is closed. [Feral's GameMode](https://github.com/FeralInteractive/gamemode)
@@ -84,7 +110,7 @@ has similar behavior but it should not be used as CachyOS ships with [`ananicy-c
    ```sh
    game-performance
    ```
-4. Click on the `plus sign` to save.
+4. Click on the `+` sign to save changes.
 </Steps>
 
 </TabItem>
@@ -119,17 +145,17 @@ has similar behavior but it should not be used as CachyOS ships with [`ananicy-c
 
 </Tabs>
 
-### Proton-CachyOS
+## Proton-CachyOS
 
-Proton-CachyOS is based on proton-experimental and applies a bunch of patches on top of it:
-- Wine-staging patches
-- Wine Fullscreen FSR
-- Reflex support for Wine
-- Support for umu-launcher
+Proton-CachyOS is based on the `proton-bleeding-edge branch` and applies a number of patches and changes on top of it.
+- `Wine-staging patches`
+- `Wine Fullscreen FSR`
+- `Reflex support for Wine`
+- `Support for umu-launcher`
 
-In addition, proton-cachyos is compiled against native system libraries and compiler instructions which can further improve performance
+In addition, proton-cachyos is compiled against native system libraries and compiler instructions which can further improve performance.
 
-### Wine-CachyOS
+## Wine-CachyOS
 
 This is a solution similar to proton-cachyos, but as standalone version, which can be used by Lutris, Heroic, Bottles and others.
 
@@ -144,10 +170,10 @@ Although it can be used as a systemd wide Wine for Desktop Applications, be awar
 
 **QoL Modifications**
 
-- WINE_WMCLASS: env variable to set the wm class of all wine windows, allowing the wm to control the window through rules.
-- WINEUSERSANDBOX: env variable to disable creating symlinks from Wine folders such as Documents/Pictures etc, to the equivalent folders in the user's directory
-- Disabled Native Window Decorations
-- Changes for optimizing Wine's performance similar as we do with proton-cachyos
+- `WINE_WMCLASS:` env variable to set the wm class of all wine windows, allowing the wm to control the window through rules.
+- `WINEUSERSANDBOX:` env variable to disable creating symlinks from Wine folders such as Documents/Pictures etc, to the equivalent folders in the user's directory
+- `Disabled Native Window Decorations`
+- `Changes for optimizing Wine's performance similar as we do with proton-cachyos`
 
 ## Bottles
 
@@ -163,30 +189,28 @@ sudo pacman -S bottles
 
 If you want to know more about it, check out their [documentation](https://docs.usebottles.com/).
 
-## Lutris
+## Lutris Introduction & Tips
+
 Lutris serves as a central hub for all your games on CachyOS. With Lutris, you can efficiently manage your game runners, including Wine, Proton, and emulators. You can even customize their parameters!
 
-```sh title="How to install Lutris"
-# Open a terminal and run the following command:
-sudo pacman -S lutris
-```
-## Lutris Guide
-
-### 1. Set the proper Wine runner
-Many games perform optimally with the Proton-GE runner, so it's advisable to configure it before installing anything else.
-<MultipleImageComponent images={[import('~/assets/images/Lutris1.png'), import('~/assets/images/Lutris2.png'), import('~/assets/images/Lutris3.png'), import('~/assets/images/Lutris4.png'), import('~/assets/images/Lutris5.png'), import('~/assets/images/Lutris6.png')]} />
-
-### 2. Install the [Epic Games Store](https://lutris.net/games/epic-games-store/)
-It's as simple as clicking with your mouse; Lutris automates the entire installation process.
-<MultipleImageComponent images={[import('~/assets/images/Lutris7.png'), import('~/assets/images/Lutris8.png'), import('~/assets/images/Lutris9.png'), import('~/assets/images/Lutris10.png'), import('~/assets/images/Lutris11.png')]} />
-
-### 3. Sign in to the [Epic Games Store](https://lutris.net/games/epic-games-store/) with your account.
-Yes, you can even sign into the [Epic Games Store](https://lutris.net/games/epic-games-store/), and Lutris will display all your owned games in your library.
-<MultipleImageComponent images={[import('~/assets/images/Lutris12.png'), import('~/assets/images/Lutris13.png'), import('~/assets/images/Lutris15.png')]} />
-
-### 4. Final words about Lutris
 - You can launch games through Lutris simply by clicking the **Play button**.
-- You can also launch a store using the **Play button** and then run games from within the store, just like you do on Windows.
+- Or add any game you want using the `+` sign in the top left.
+- You can also launch a store in the `Sources` at the left and connecting your account, it will install said store and then you'll be able to run games from within the store, just like you do on Windows.
+- And more!
+
+### Games stores supported in Lutris
+
+- [EA App](https://lutris.net/games/ea-app/)
+- [Epic Games Store](https://lutris.net/games/epic-games-store/)
+- [GOG Galaxy](https://lutris.net/games/gog-galaxy/)
+- [Steam](https://lutris.net/games/steam/)
+- [Ubisoft Connect](https://lutris.net/games/ubisoft-connect/)
+
+### Set the proper Wine runner
+
+Many games perform optimally with the wine-cachyos runner, so it's advisable to configure it before playing a game.
+
+<MultipleImageComponent images={[import('~/assets/images/lutris-guide-1.png'), import('~/assets/images/lutris-guide-2.png')]} />
 
 ## Lutris FAQ
 ### How can i add a parameter when launching a game? For example -dx11
@@ -270,11 +294,6 @@ Make sure you have umu-launcher installed in your system. Install it with the fo
     </TabItem>
 
     </Tabs>
-
-### Games stores
-- [Epic Games Store](https://lutris.net/games/epic-games-store/)
-- [Ubisoft Connect](https://lutris.net/games/ubisoft-connect/)
-- [GOG Galaxy](https://lutris.net/games/gog-galaxy/)
 
 ## Ray tracing Support
 The Arch Wiki has already provides comprehensive instructions on how to enable [ray tracing](https://wiki.archlinux.org/title/Hardware_raytracing) for various hardware platforms.

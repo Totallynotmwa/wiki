@@ -53,7 +53,7 @@ CachyOS provides various Proton versions that we build & maintain for further pe
 To check if your game is compatible or how does it run with Linux, visit [proton-db](https://www.protondb.com/).
 :::
 
-## Steam Proton FAQ
+## Steam FAQ & Tips
 
 ### Which Proton version should i use in Steam?
 
@@ -65,6 +65,18 @@ To check if your game is compatible or how does it run with Linux, visit [proton
 ### What is proton-cachyos? 
 
 Check out this [explanation about it.](/configuration/gaming#proton-cachyos)
+
+### How to properly combine multiple launch options
+
+- Add the environment variables or commands you want and at the end include a `%command%`
+    - Example: `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 prime-run game-performance %command%`
+
+:::caution
+Don't add multiple `%command%` by using them as separators for multiple launch options.
+
+Example: `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 %command% game-performance %command% prime-run %command%`
+    - On this case, everything after the first `%command%` is going to be ignored because it's being threated as game arguments therefore only `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1` got recognized as a launch option.
+:::
 
 ## Performance tips
 

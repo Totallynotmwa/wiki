@@ -6,9 +6,11 @@ description: Frequently asked questions and tips
 import MultipleImageComponent from '~/components/multiple-images-component.astro';
 import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Here are some of the common questions. We recommend that users read this, especially those using CachyOS or Arch-based distributions.
+:::note
+The following questions & answers apply to CachyOS and Arch Based distributions.
+:::
 
-## Installation FAQ
+## Installation
 
 ### Why is KDE Plasma the only available option in the live environment?
 
@@ -46,19 +48,19 @@ This is why it usually takes a bit of time to load.
 
 This means that your internet connection is either very slow or unstable causing pacman to struggle when downloading the packages.
 
-## Software management FAQ
+## Software management
 
 ### How can I fix the "unable to lock database" error in CachyOS?
 ```sh
 sudo rm /var/lib/pacman/db.lck
 ```
 :::tip
-You can also achieve this by using **"Remove db lock"** in CachyOS Hello in the **Apps/Tweaks** tab.
+You can achieve the same outcome by using **"Remove db lock"** function in `CachyOS Hello` in the **Apps/Tweaks** tab.
 :::
 
 ### How can I fix possible keyring issues in CachyOS?
 
-```code
+```text
 # Example:
 :: File /var/cache/pacman/pkg/python-charset-normalizer-3.4.0-1-any.pkg.tar.zst
 is corrupted (invalid or corrupted package (PGP signature)). 

@@ -1,95 +1,115 @@
 ---
-title: Managing Kernels & Sched-ext with CachyOS Kernel Manager
+title: Managing Linux Kernels & Sched-ext framework with the CachyOS Kernel Manager
 description: The CachyOS Kernel Manager is a powerful tool for managing kernels, allowing users to easily install or build custom kernels with ease.
 ---
 
 import ImageComponent from '~/components/image-component.astro';
 
-CachyOS Kernel Manager
-======================
-
-The CachyOS Kernel Manager makes it simple to install and manage kernels from the repository. It also provides a comprehensive overview of all installed kernels.
-
-Installing a Kernel from the Repository
+Installing a Kernel from a Repository
 ---------------------------------------
 
-To install a kernel, simply launch the CachyOS Kernel Manager application and choose the desired kernel from a list of available options.
-Then, simply click the "execute" button to complete the installation.
+**The CachyOS Kernel Manager makes it simple to install and manage kernels from any Arch Linux repository.**
+
+To install a kernel. Launch the `CachyOS Kernel Manager` application and choose the desired kernel by ticking the box `[]` from the list of all the available options then just press on `Execute` to start the kernel installation.
 
 <br />
 <ImageComponent imgsrc={import('~/assets/images/cachyos-km1.png')} />
 
-Configuring and Building a Kernel
+:::note
+The `Execute` button becomes unavailable when you choose an already installed kernel.
+:::
+
+Configuring and Building a custom CachyOS Kernel
 ---------------------------------
-
-The CachyOS Kernel Manager also makes it easy to configure and build custom kernels. To get started, simply open the application and click the "configure" button. Then, you can adjust various settings, such as the scheduler, performance governor, tick rate, and more. Once you have made your desired changes, simply click the "execute" button to begin building your custom kernel.
-
-Available configuration options include:
-
-* Custom package name
-* Scheduler (sched-ext, BORE, ECHO, RC, RT)
-* Enable CachyOS config
-* Tweak Configuration via nconfig, menuconfig, xconfig, or gconfig
-* Enable/Disable NUMA
-* Enable/Disable Modprobed-db
-* KBUILD CFLAGS (-O3 or -O2)
-* Performance governor as default
-* Enable BBR3
-* Tick rate selection (100Hz, 250Hz, 300Hz, 500Hz, 600Hz, 750Hz, 1000Hz)
-* Tickless mode (idle, periodic, full)
-* Preemption (Full, Voluntary or Server)
-* Transparent Hugepages (Always or Madvise)
-* Enable/Disable DAMON
-* Enable/Disable Automatic CPU arch detection
-* Apply kernel optimization for specific CPU architectures
-* Enable LTO (Full, Thin, No)
-* Build ZFS Module
-* Build NVIDIA Closed Module
-* Build NVIDIA Open Module
-* Include vmlinux with debug information/symbols
-* Load/Save Kernel Manager config preset
-* Kernel Patches Management (Remote and Local support)
-
-Once the kernel is built, it will be installed automatically. You can find the package in `$HOME/.cache/cachyos-km`.
 
 <br />
 <ImageComponent imgsrc={import('~/assets/images/cachyos-km2.png')} />
 
-## Sched-ext GUI
+**The CachyOS Kernel Manager makes it easy to configure and build a custom CachyOS kernel.**
 
-The Kernel Manager also offers a GUI for managing and controlling the sched-ext schedulers on the **sched-ext scheduler config** button.
+:::note
+The CachyOS Kernel Manager is specifically designed to build custom kernels for **CachyOS variants** and does not support building or configuring a standard Arch Linux kernel or any other variant.
+:::
 
-You can switch between the different scx schedulers, enable the service and check which scheduler is currently running, set schedulers flags and a profile. ***Currently only bpfland and lavd have support for profiles.***
+*To get started. Open the Kernel Manager and click on the `Configure` button to start adjusting various settings, such as the desired scheduler, tick rate and more. Once you have made your desired changes click on `Build kernel` button to begin building your custom CachyOS kernel.*
 
-### What are those "profiles" for?
+**Available configuration options:**
 
-Basically they're presets for the scheduler by modifying their flags from (Already tested & proven) combinations in order to achieve more effectiveness in said use case e.g "Gaming".
+* *`Custom package name`: **With this option, you can name your kernel to whatever you want example: `linux-custom-cachy`***
+* *Scheduler (BORE, RC, RT, RT+BORE, EEVDF and BMQ)*
+* *Enable CachyOS config*
+* *Tweak Configuration via nconfig, menuconfig, xconfig, or gconfig*
+* *Enable/Disable NUMA*
+* *Enable/Disable Modprobed-db*
+* *KBUILD CFLAGS (-O3 or -O2)*
+* *Performance governor as default*
+* *Enable BBR3*
+* *Tick rate selection (100Hz, 250Hz, 300Hz, 500Hz, 600Hz, 750Hz, 1000Hz)*
+* *Tickless mode (idle, periodic, full)*
+* *Preemption (Full, Voluntary or Server)*
+* *Transparent Hugepages (Always or Madvise)*
+* *Enable/Disable DAMON*
+* *Enable/Disable Automatic CPU arch detection*
+* *Apply kernel optimization for specific CPU architectures*
+* *Enable LTO (Full, Thin, No)*
+* *Build ZFS Module*
+* *Build NVIDIA Closed Module*
+* *Build NVIDIA Open Module*
+* *Include vmlinux with debug information/symbols*
+* *Load/Save Kernel Manager config preset: `(Only presets from the manager itself)`*
+* *Kernel Patches Management (Remote and Local support)*
 
-## Scheduler Profiles
+**Once the kernel has been successfully built, you will be prompted for your sudo password to install the kernel.**
 
-### Bpfland
+## Sched-ext Framework Management
 
-- ***Low Latency:*** As the name implies, this profile is meant to be used when latency is critical. Enabling this option can be beneficial in soft real-time scenarios, such as audio
-processing, multimedia etc.
+**The Kernel Manager provides a graphical user interface (GUI) for managing and controlling sched-ext schedulers. Access the GUI by clicking on the `sched-ext scheduler config` button in the main window.**
 
-- ***Gaming:*** Bpfland is going to try it's best to achieve the highest performance on the game and if you're in a Intel CPU with a mix of P/E Cores then it will prioritize P Cores over E Cores, same goes for Ryzen X3D CPUs and their CCD with stacked L3 X3D cache.
+<br />
+<ImageComponent imgsrc={import('~/assets/images/cachyos-km3.png')} />
 
-- ***Power Save:*** In order to achieve more savings in power consumption, Bpfland will adjust itself to prioritize less performant cores such as E Cores on Intel meaning the P cores are going to be avoided when possible.
+This GUI allows you to:
 
-### LAVD
+- **Switch between different sched-ext (scx) schedulers.**
+- **Enable or disable the scheduler service.**
+- **Check the currently running scheduler.**
+- **Set scheduler flags and profiles.  `Currently only bpfland and lavd support profiles.`**
 
-- ***Power Save:*** The primary goal of this profile is to save power consumption while providing reasonable performance. It tries to use the minimum number of cores serving the compute demand. Notably, hybrid processor architectures (e.g., P/E cores in Intel Alder Lake or big/LITTLE cores in ARM) choose energy-efficient cores (E or LITTLE cores) to save energy. Similarly, when hyper-threading is enabled, the scheduler prefers using hyper-threads to minimize the number of physical cores and power consumption. The power saving profile will be useful when your laptop's battery is low or if u want to reduce power usage when performance is not a priority.
+In order to achieve this, the Kernel Manager uses the `scx_loader` with a configuration stored in:
 
-- ***Gaming & Low Latency:***  LAVD aims to maximize performance without taking in consideration power consumption. With the performance profile, LAVD always utilizes all the cores while still preferring to schedule tasks on performant, physical cores over energy-efficient, hyper-twin cores. Also, when the [sched_util](<https://github.com/sched-ext/scx/tree/main/rust/scx_utils>) scaling governor is used, LAVD lies to the underlying CPU driver, stating that the workload requires maximum performance no matter the demand.
+`/etc/scx_loader.toml`.  For more information about the `scx_loader` configuration file, check [this documentation](https://github.com/sched-ext/scx/blob/main/rust/scx_loader/configuration.md).
 
-List of flags used in the profiles:
+- **How does the `scx_loader` work?**
+    - Once you have selected the scheduler and profile, the scx_loader will then start the scheduler with the profile that has been selected and save this configuration to the `/etc/scx_loader.toml` file in order to achieve persistence across reboots. An example of what the file will look like choosing `scx_bpfland` with the `Gaming` profile:
+        ```toml
+        default_sched = "scx_bpfland"
+        default_mode = "Gaming"
 
-Bpfland
- - Low Latency: `--lowlatency`
- - Gaming: `-k -m performance`
- - Power Save: `-m powersave`
+        [scheds.scx_bpfland]
+        auto_mode = []
+        gaming_mode = ["-m", "performance"]
+        lowlatency_mode = ["-k", "-s", "5000", "-l", "5000"]
+        powersave_mode = ["-m", "powersave"]
+        ```
 
-LAVD
- - Low Latency: `--performance`
- - Gaming: `--performance`
- - Power Save: `--powersave`
+### Scheduler Profiles
+
+- **What are the "profiles" for?**
+  - They are presets for the scheduler that modify flags based on proven combinations to enhance effectiveness for specific use cases, such as "Gaming."
+
+**Check the table for a more detailed look.**
+
+#### Bpfland
+
+|   Profile Name  	|  Command-line Flags  	|                                                         Description                                                         	|
+|:---------------:	|:--------------------:	|:---------------------------------------------------------------------------------------------------------------------------:	|
+| **Low Latency** 	| `-k -s 5000 -l 5000` 	| Meant to lower latency at the cost of throughput. Suitable for real-time applications like Audio Processing and Multimedia. 	|
+| **Gaming**      	| `-k -m performance`  	| Optimizes for high performance in games. Prioritizes P-cores over E-cores on Intel CPUs and CCDs on Ryzen X3D CPUs.         	|
+| **Power Save**  	| `-m powersave`       	| Prioritizes power efficiency. Favors less performant cores (e.g E-cores on Intel).                                          	|
+
+#### LAVD
+
+|       Profile Name       	| Command-line Flags 	|                                                             Description                                                            	|
+|:------------------------:	|:------------------:	|:----------------------------------------------------------------------------------------------------------------------------------:	|
+| **Gaming & Low Latency** 	|   `--performance`  	| Maximizes performance by using all available cores, prioritizing physical cores.                                                   	|
+|      **Power save**      	|    `--powersave`   	| Minimizes power consumption while maintaining reasonable performance. Prioritizes efficient cores and threads over physical cores. 	|

@@ -3,9 +3,9 @@ title: sched-ext Tutorial
 description: Tutorial how to use LAVD, Rusty, Rustland and bpfland
 ---
 
-Extensible Scheduler Class, or better known as `sched-ext` is a Linux kernel feature which enables implementing kernel thread schedulers in 
-BPF (Berkeley Package Filter) and dynamically loading them. Essentially this allows end-users to change their schedulers in userspace without 
-the need to build another kernel for a different scheduler.
+Extensible Scheduler Class, or better known as `sched-ext` is a Linux kernel feature which enables implementing kernel thread schedulers in
+BPF (Berkeley Package Filter) and dynamically loading them. Essentially this allows end-users to change their schedulers in userspace without
+the need to build another kernel just to have a different scheduler.
 
 ## Starting and using the scx schedulers
 
@@ -13,12 +13,15 @@ You can find the schedulers in the `scx-scheds` or `scx-scheds-git` package.
 Simply run following command to install the package:
 
 ```sh
-sudo pacman -Sy scx-scheds
+# Stable branch
+sudo pacman -S scx-scheds
+# Bleeding edge branch
+sudo pacman -S scx-scheds-git
 ```
 
 ### Starting the Scheduler
 
-The scheduler can be simply started in the terminal with following command:
+The scheduler can be simply started in the terminal with the following command:
 
 ```sh
 sudo scx_rusty
@@ -26,40 +29,53 @@ sudo scx_rusty
 
 This will launch the rusty scheduler and detach the default scheduler.
 
-To stop the scheduler, you simply run CTRL + C and the scheduler will be stopped and the default kernel scheduler will be used again.
+To stop the scheduler. Press `CTRL + C` and the scheduler will then be stopped and the default kernel scheduler will take over again.
 
 ### Systemd Service
 
-The scx packages provides also a systemd service. This service can be configured in `/etc/default/scx`.
-You can change the scheduler used by sched-ext and set custom flags for each scheduler in this configuration file.
-By default, the services uses the rusty scheduler. If you want to change the scheduler used by the service simply change
-the `SCX_SCHEDULER=scx_rusty` to `SCX_SCHEDULER=scx_lavd` or others.
+:::note
+This service is going to get deprecated and replaced by the **[scx_loader](https://github.com/sched-ext/scx/tree/main/rust/scx_loader)**
+:::
 
-Now you can start/enable/stop the scheduler as any other systemd service.
+The scx packages provide a systemd service. This service takes in consideration what is configured in the `/etc/default/scx` file.
 
-#### Use the scx scheduler as default and enable directly at the boot
+You can specify the scheduler that the service starts and optionally add custom flags for the desired scheduler.
+
+By default, the service defaults to the bpfland scheduler.
+
+If you want to change the scheduler started by the service simply modify the `SCX_SCHEDULER=` line to the scheduler you want to start by default.
+
+```sh title='Example'
+SCX_SCHEDULER=scx_lavd
+```
+
+Now you can start/enable/stop the scheduler as if it was any other systemd service.
+
+**Check the brief guide on how to manage it below.**
+
+#### Enable & Start the systemd service
 
 ```sh
 sudo systemctl enable --now scx
 ```
 
-#### Start the scheduler only once via the systemd service
+#### Running the scheduler a single time through the systemd service
 
 ```sh
 sudo systemctl start scx
 ```
 
-#### Stop the scx scheduler via systemd service
+#### Stopping the SCX scheduler using the systemd service
 
 ```sh
 sudo systemctl stop scx
 ```
 
-For more information: [Sched-ext systemd service](<https://github.com/sched-ext/scx/blob/main/services/README.md>)
+*For more information about this service: [Sched-ext systemd service](<https://github.com/sched-ext/scx/blob/main/services/README.md>)*
 
 ### CachyOS Kernel Manager
 
-The scx schedulers can be accessed and configured through the [GUI](/configuration/kernel-manager#sched-ext-gui).
+**The scx schedulers can be accessed and configured using the brand new [scx_loader](/features/kernel_manager#sched-ext-framework-management).**
 
 ## Introduction to the main schedulers
 
@@ -81,7 +97,7 @@ Bpfland when making decisions on which cores to use, it takes in consideration t
 
 **Use cases:**
 
-- Gaming 
+- Gaming
 - Desktop usage
 - Multimedia/Audio production
 - Great interactivity under intensive workloads
@@ -126,7 +142,8 @@ One of the main and awesome capabilities that LAVD includes is **Core Compaction
 
 **Developed by: David Vernet (Byte-Lab [GitHub](<https://github.com/Byte-Lab>))**
 
-Being one of the heaviest schedulers yet released on sched-ext, it comes with a lot of features that add to his flexibility and capability. Tunability is one of them so you can adjust Rusty to your desires and use case.
+Rusty offers a wide range of features that enhance its capabilities, providing greater flexibility for various use cases.
+One of these features is tunability, allowing you to customize Rusty to suit your preferences and specific requirements.
 
 **Use cases:**
 
@@ -138,7 +155,7 @@ Being one of the heaviest schedulers yet released on sched-ext, it comes with a 
 - Great interactivity under intensive workloads
 - Power saving
 
-For more information about what can be done with Rusty and his tunable flags. Check out the help page:
+For a more in depth look about what can be tuned for Rusty. Check out the help page
 
 ```text
 scx_rusty --help
@@ -167,9 +184,12 @@ scx_lavd --autopower
 
 ### Disable ananicy-cpp
 
-- When using any of the schedulers from the sched-ext framework, it's strongly advised to disable and avoid ananicy-cpp due to causing conflicts because it amplifies the priority gap that the scheduler is already creating/handling by boosting interactive tasks creating an excessive prioritization starving other tasks increasing the chance of hitting the sched_ext watchdog timeout kicking the running scheduler aka causing an stall.
+:::caution
+When using any of the schedulers from the sched-ext framework, it's strongly advised to disable and avoid using ananicy-cpp due to possible conflicts because it amplifies the priority gap that the scheduler is already creating/handling by boosting interactive tasks creating an excessive prioritization starving other tasks increasing the chance of hitting the sched_ext watchdog timeout kicking the running scheduler aka causing an stall.
+:::
 
-In order to disable/stop ananicy-cpp, run the following command:
+**In order to disable/stop ananicy-cpp, run the following command:**
+
 ```sh
 systemctl disable --now ananicy-cpp
 ```
@@ -213,7 +233,7 @@ In order to find out which one fits you best, there is no other shortcut than to
 
 ### I'm missing a scheduler that some users are mentioning or testing in the Discord server
 
-The reason behind is probably because these schedulers are being tested therefore they're only included as a cherry pick in the scx-scheds-git package instead of the stable version.
+The reason behind is because these schedulers are being tested therefore they're only included as a cherry pick in the scx-scheds-git package instead of the stable version.
 
 ## Learn More
 

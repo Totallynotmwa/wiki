@@ -41,13 +41,19 @@ The scx packages provide a systemd service. This service takes in consideration 
 
 You can specify the scheduler that the service starts and optionally add custom flags for the desired scheduler.
 
-By default, the service defaults to the bpfland scheduler.
+*By default, the service defaults to the bpfland scheduler.*
 
-If you want to change the scheduler started by the service simply modify the `SCX_SCHEDULER=` line to the scheduler you want to start by default.
+- **If you want to change the scheduler started by the service simply modify the `SCX_SCHEDULER=` line to the scheduler you want to start by default.**
 
-```sh title='Example'
-SCX_SCHEDULER=scx_lavd
-```
+  - ```sh title='Example'
+    SCX_SCHEDULER=scx_lavd
+    ```
+
+- **Adding flags**
+  - Uncomment `SCX_FLAGS` and add the flags you desire.
+    ```sh title='Example'
+    SCX_FLAGS='--performance'
+    ```
 
 Now you can start/enable/stop the scheduler as if it was any other systemd service.
 

@@ -10,7 +10,12 @@ Secure boot must be disabled when installing CachyOS. To setup secure boot after
 :::
 
 :::tip
-It's highly recommended to restart the ISO after a failed installation attempt.
+It is highly recommended to restart the ISO after a failed installation attempt.
+
+Otherwise, you may encounter continuous errors during installation.
+
+This happens because the installer doesn't properly unmount partitions on a failed install.
+
 :::
 
 ## Erase Disk

@@ -7,25 +7,24 @@ Extensible Scheduler Class, or better known as `sched-ext` is a Linux kernel fea
 BPF (Berkeley Package Filter) and dynamically loading them. Essentially this allows end-users to change their schedulers in userspace without
 the need to build another kernel just to have a different scheduler.
 
-## Starting and using the scx schedulers
+## Methods for starting and managing schedulers
 
-You can find the schedulers in the `scx-scheds` or `scx-scheds-git` package.
-Simply run following command to install the package:
+- **The schedulers can be found in the `scx-scheds` and `scx-scheds-git` package.**
+  ```sh
+  # Stable branch
+  sudo pacman -S scx-scheds
 
-```sh
-# Stable branch
-sudo pacman -S scx-scheds
-# Bleeding edge branch
-sudo pacman -S scx-scheds-git
-```
+  # Bleeding edge branch (This branch includes the latest changes
+  # and may contain a scheduler that has not yet been released.)
+  sudo pacman -S scx-scheds-git
+  ```
 
-### Starting the Scheduler
+### Starting the Scheduler in the Terminal
 
-The scheduler can be simply started in the terminal with the following command:
-
-```sh
-sudo scx_rusty
-```
+- *To start the scheduler, open your terminal and enter the following command:*
+  ```sh title='Example of starting rusty'
+  sudo scx_rusty
+  ```
 
 This will launch the rusty scheduler and detach the default scheduler.
 
@@ -37,9 +36,9 @@ To stop the scheduler. Press `CTRL + C` and the scheduler will then be stopped a
 This service is going to get deprecated and replaced by the **[scx_loader](https://github.com/sched-ext/scx/tree/main/rust/scx_loader)**
 :::
 
-The scx package provides a systemd service. This service takes in consideration what is configured in the `/etc/default/scx` file.
+The scx package includes a systemd service that utilizes the configuration specified in the /etc/default/scx file.
 
-You can specify the scheduler that the service starts and optionally include custom flags for the desired scheduler.
+In this configuration file you can specify the scheduler that the service starts and optionally include custom flags for the desired scheduler.
 
 - **If you want to change the scheduler started by the service simply modify the `SCX_SCHEDULER=` line to the scheduler you want to start by default.**
 

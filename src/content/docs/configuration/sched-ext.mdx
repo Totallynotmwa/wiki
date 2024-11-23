@@ -3,6 +3,8 @@ title: sched-ext Tutorial
 description: Tutorial how to use LAVD, Rusty, Rustland and bpfland
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 Extensible Scheduler Class, or better known as `sched-ext` is a Linux kernel feature which enables implementing kernel thread schedulers in
 BPF (Berkeley Package Filter) and dynamically loading them. Essentially this allows end-users to change their schedulers in userspace without
 the need to build another kernel just to have a different scheduler.
@@ -26,7 +28,7 @@ the need to build another kernel just to have a different scheduler.
   sudo scx_rusty
   ```
 
-This will launch the rusty scheduler and detach the default scheduler.
+*This will launch the rusty scheduler and detach the default scheduler.*
 
 To stop the scheduler. Press `CTRL + C` and the scheduler will then be stopped and the default kernel scheduler will take over again.
 
@@ -36,9 +38,9 @@ To stop the scheduler. Press `CTRL + C` and the scheduler will then be stopped a
 This service is going to get deprecated and replaced by the **[scx_loader](https://github.com/sched-ext/scx/tree/main/rust/scx_loader)**
 :::
 
-The scx package includes a systemd service that utilizes the configuration specified in the /etc/default/scx file.
+The scx package includes a systemd service that uses the configuration specified in the `/etc/default/scx` file.
 
-In this configuration file you can specify the scheduler that the service starts and optionally include custom flags for the desired scheduler.
+In this configuration file, you can specify the scheduler that the service starts and optionally include custom flags for the desired scheduler.
 
 - **If you want to change the scheduler started by the service simply modify the `SCX_SCHEDULER=` line to the scheduler you want to start by default.**
 
@@ -52,29 +54,70 @@ In this configuration file you can specify the scheduler that the service starts
     SCX_FLAGS='--performance'
     ```
 
-Now you can start/enable/stop the scheduler as if it was any other systemd service.
+*Now you can start/enable/stop the scheduler as if it was any other systemd service.*
 
 **Check the brief guide on how to manage it below.**
 
-#### Enable & Start the systemd service
-
-```sh
+```sh title='Enabling and starting the systemd service'
 sudo systemctl enable --now scx
 ```
 
-#### Running the scheduler a single time through the systemd service
-
-```sh
+```sh title='Running the scheduler a single time through the systemd service'
 sudo systemctl start scx
 ```
 
-#### Stopping the SCX scheduler using the systemd service
-
-```sh
+```sh title='Stopping the SCX scheduler using the systemd service'
 sudo systemctl stop scx
 ```
 
 *For more information about this service: [Sched-ext systemd service](<https://github.com/sched-ext/scx/blob/main/services/README.md>)*
+
+### [scx_loader](https://github.com/sched-ext/scx/tree/main/rust/scx_loader)
+
+*As the name implies, it is a utility that functions as a loader and manager for the sched-ext framework using the D-Bus interface.*
+
+*While it does not require systemd, it can still be utilized in conjunction with it.* [Check the transition guide for reference](/configuration/sched-ext#transitioning-from-scxservice-to-scx_loader-a-comprehensive-guide))
+
+- **Has the ability to stop, start, restart, read information about a scx scheduler and more.**
+  - *You can use tools like `dbus-send` or `gdbus` to communicate with it.*
+- **This guide explains how to use scx_loader with the dbus-send command.**
+  - ```sh title='Starting scx_rusty with its default arguments'
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.scx.Loader.StartScheduler string:scx_rusty uint32:0
+    ```
+  - ```sh title='Starting a scheduler with arguments'
+    # This example starts scx_bpfland with the following flags: -k -c 0
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.scx.Loader.StartSchedulerWithArgs string:scx_bpfland array:string:"-k","-c","0"
+    ```
+  - ```sh title='Stopping the currently running scheduler'
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.scx.Loader.StopScheduler
+    ```
+  - ```sh title='Switching to another scheduler in Mode 2'
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.scx.Loader.SwitchScheduler string:scx_lavd uint32:2
+    # This switches to scx_lavd with the scheduler mode 2 meaning it starts LAVD in powersaving
+    ```
+  - ```sh title='Switching to another scheduler with arguments'
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.scx.Loader.SwitchSchedulerWithArgs string:scx_bpfland array:string:"-k","-c","0"
+    ```
+  - ```sh title='Getting the currently running scheduler'
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.freedesktop.DBus.Properties.Get string:org.scx.Loader string:CurrentScheduler
+    ```
+  - ```sh title='Getting a list of the supported schedulers'
+    dbus-send --system --print-reply --dest=org.scx.Loader /org/scx/Loader org.freedesktop.DBus.Properties.Get string:org.scx.Loader string:SupportedSchedulers
+    ```
+:::tip
+Here is an explanation of what each mode means in scx_loader.
+
+- **Mode 0** = `Default scheduler flags`
+- **Mode 1** = `The flags have been modified for Gaming`
+- **Mode 2** = `Power Saving flags`
+- **Mode 3** = `Low Latency flags`
+
+Example: LAVD running in Mode 1 is the equivalent of `scx_lavd --performance`
+
+*TLDR: Each mode is a set of different flags for the intended use case.*
+
+[For a more in depth look on what these Modes change on each scheduler](https://github.com/sched-ext/scx/blob/main/rust/scx_loader/src/config.rs#L167)
+:::
 
 ### CachyOS Kernel Manager
 
@@ -195,6 +238,89 @@ When using any of the schedulers from the sched-ext framework, it's strongly adv
 ```sh
 systemctl disable --now ananicy-cpp
 ```
+
+## Transitioning from scx.service to scx_loader: A Comprehensive Guide
+
+:::caution
+Do not attempt to run the scx_loader.service alongside the scx.service otherwise, the loader service will start but do nothing.
+
+This conflict arises because both services are unaware of each other, especially regarding which one manages the schedulers.
+:::
+
+:::tip
+The CachyOS Kernel Manager already includes a [GUI for managing the scx_loader.](/features/kernel_manager#sched-ext-framework-management)
+:::
+
+**First let's start with a close-up comparison between the scx.service file structure against the scx_loader configuration file structure.**
+
+*If you previously had LAVD running with the old scx.service like this example below:*
+
+```sh title='scx.service file structure'
+# List of scx_schedulers: scx_bpfland scx_central scx_flash scx_lavd scx_layered scx_nest scx_qmap scx_rlfifo scx_rustland scx_rusty scx_simple scx_userland
+SCX_SCHEDULER=scx_lavd
+
+# Set custom flags for each scheduler, below is an example of how to use
+SCX_FLAGS='--performance'
+```
+
+**Then the equivalent on the scx_loader configuration file will look like:**
+
+```sh title='scx_loader file structure'
+default_sched = "scx_lavd"
+default_mode = "Auto"
+
+[scheds.scx_lavd]
+auto_mode = ["--performance"]
+```
+
+**[For more information on how to configure the scx_loader file](https://github.com/sched-ext/scx/blob/main/rust/scx_loader/configuration.md)**
+
+  **Follow the guide below for an easy transition from the `scx systemd service` to the new `scx_loader` utility.**
+  <Steps>
+  1. ```sh title='Disabling scx.service in favor of the scx_loader.service'
+      systemctl disable --now scx.service && systemctl enable --now scx_loader.service
+      ```
+  2. ```sh title='Creating the configuration file for the scx_loader and adding the default structure'
+     # Micro editor is going to create a new file.
+     sudo micro /etc/scx_loader.toml
+     # Add the following lines:
+
+     default_sched = "scx_bpfland" # Edit this line to the scheduler you want scx_loader to start at boot
+     default_mode = "Auto" # Possible values: "Auto", "Gaming", "LowLatency", "PowerSave".
+
+     # Press CTRL + S to save changes and CTRL + Q to exit Micro.
+     ```
+  3. ```sh title='Restarting the scx_loader'
+     systemctl restart scx_loader.service
+     ```
+     - **You're done, the scx_loader will now load and start the desired scheduler.**
+
+  </Steps>
+
+### Debugging in the scx_loader
+
+  - ```sh title='Checking the service status'
+    systemctl status scx_loader.service
+    ```
+  - ```sh title='Viewing all the service log entries'
+    journalctl -u scx_loader.service
+    ```
+  - ```sh title='Viewing only the logs of the current session.'
+    journalctl -u scx_loader.service -b 0
+    ```
+- **Advanced logging**
+
+*In order to get a more detailed log, follow these steps.*
+  1) ```sh title='Edit the service file'
+     sudo systemctl edit scx_loader.service
+     ```
+  2) ```sh title='Add the following line under the [Service] section'
+     Environment=RUST_LOG=trace
+     ```
+  3) ```sh title='Restart the service'
+     sudo systemctl restart scx_loader.service
+     ```
+- **Check the logs again for a more detailed debugging information.**
 
 ## FAQ
 

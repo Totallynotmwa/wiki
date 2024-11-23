@@ -37,11 +37,9 @@ To stop the scheduler. Press `CTRL + C` and the scheduler will then be stopped a
 This service is going to get deprecated and replaced by the **[scx_loader](https://github.com/sched-ext/scx/tree/main/rust/scx_loader)**
 :::
 
-The scx packages provide a systemd service. This service takes in consideration what is configured in the `/etc/default/scx` file.
+The scx package provides a systemd service. This service takes in consideration what is configured in the `/etc/default/scx` file.
 
-You can specify the scheduler that the service starts and optionally add custom flags for the desired scheduler.
-
-*By default, the service defaults to the bpfland scheduler.*
+You can specify the scheduler that the service starts and optionally include custom flags for the desired scheduler.
 
 - **If you want to change the scheduler started by the service simply modify the `SCX_SCHEDULER=` line to the scheduler you want to start by default.**
 
@@ -172,10 +170,9 @@ scx_rusty --help
 ### LAVD Autopilot & Autopower
 
 ***Quotes from Changwoo Min:***
-In the autopilot mode, the scheduler dynamically changes its power mode (Powersave, Balanced or Performance) according to system's load (CPU
-utilization).
+- **In autopilot mode, the scheduler adjusts its power mode `Powersave, Balanced, or Performance` based on the system's load, specifically CPU utilization**
 
-Autopower: Automatically decide the scheduler's power mode based on the system's energy profile aka EPP (Energy Performance Preference).
+- **Autopower: Automatically decide the scheduler's power mode based on the system's energy profile aka EPP (Energy Performance Preference).**
 
 :::note
 LAVD now enables autopilot by default.
@@ -204,42 +201,33 @@ systemctl disable --now ananicy-cpp
 
 ### Why X scheduler performs worse than the other?
 
-They're lots of variables that take place when comparing each one of them, for example: How do they measure a task's weight? Does it prioritize interactive instead of non interactive ones? and so on.
+- **There are many variables to consider when comparing them. For example, how do they measure a task's weight? Do they prioritize interactive tasks over non-interactive ones?
+  Ultimately, it depends on their design choices.**
 
 ### Why everyone keeps saying this X scheduler is the best for X case but it does not perform as well for me?
 
-Similar to the answer from above. Which cpu is used and his design, being their core layout or similar might cause the scheduler to not work as intended.
-
-That's why having choices is one of the highlights from the sched-ext framework, so don't be scared to try the main ones and see which one works best for your use case, being ex: fps stability, maximum performance, responsiveness under intensive workloads etc.
-
-Each of these schedulers' behavior can be tuned with flags. Refer to each scheduler's `--help` output for a brief explanation
-of what each flag does
-
-```sh
-# Example:
-❯ scx_lavd --help
-
-Options:
-      --no-core-compaction
-          Disable core compaction, which uses minimum CPUs for power saving, and always use all the online
-          CPUs
-
-      --prefer-smt-core
-          Use SMT logical cores before using other physical cores in core compaction
-
-      --no-freq-scaling
-          Disable frequency scaling by scx_lavd
-```
+- **Like the previous answer, the choice of CPU and its design such as the core layout, how they shaer cache across the cores and other related factors can lead to the scheduler operating less efficiently.**
+- **That's why having choices is one of the highlights from the sched-ext framework, so don't be scared to try one and see which one works best for your use case. `Examples: fps stability, maximum performance, responsiveness under intensive workloads etc.`**
 
 ### The use cases of these schedulers are quite similar... why is that?
 
-Mainly because they are (for now) multipurpose schedulers, meaning they adapt to many workloads even if they don't excel at all of them.
+- **Primarily because they are multipurpose schedulers, which means they can accommodate a variety of workloads, even if they may not excel in every area.**
 
-In order to find out which one fits you best, there is no other shortcut than to test it yourself.
+- **To determine which scheduler suits you best, there's no better advice than to try it out for yourself.**
 
-### I'm missing a scheduler that some users are mentioning or testing in the Discord server
+### I'm missing a scheduler that some users are mentioning or testing in the CachyOS Discord server
+**Make sure you're using the bleeding edge version of the scx-scheds package named as `scx-scheds-git`**
 
-The reason behind is because these schedulers are being tested therefore they're only included as a cherry pick in the scx-scheds-git package instead of the stable version.
+- **One of the reasons will be that this scheduler is very new and is currently being tested by the users, therefore it has not yet been added to the `scx-scheds-git` package.**
+
+### Why did the scheduler suddenly crashed? Is it unstable?
+
+- *There could be a few reasons on why this happened:*
+  - **One of the most common reason is that you were using ananicy-cpp alongside the scheduler. This why we added this [warning](/configuration/sched-ext#disable-ananicy-cpp)**
+  - **Another reason could be that the workload you were running exceeded the limits and capacity of the scheduler causing it to stall.**
+    - **Example of an unreasonable workload: `hackbench`**
+  - **Or the more obvious reason, you've found a bug in the scheduler, if so. Please report it as an issue in their [GitHub](https://github.com/sched-ext/scx/issues) or let them know
+    about it in the CachyOS Discord channel `sched-ext`**
 
 ## Learn More
 

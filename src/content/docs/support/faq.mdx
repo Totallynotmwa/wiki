@@ -93,7 +93,7 @@ sudo pacman -Syuu
 
 ### When trying to install a package with pacman i received the following error
 
-```code
+```text
 # Example
 sudo pacman -S telegram-desktop
 resolving dependencies...
@@ -151,4 +151,23 @@ You can also clear pacman's cache using CachyOS Hello in **Apps/Tweaks** > **Cle
 ```sh title='Run the following command to fix it'
 # Removes all the orphans stored in pkg cache.
 sudo rm -r /var/cache/pacman/pkg/*
+```
+
+### I got this nvidia module error when I tried to update my system.
+
+```text
+==> ERROR: module not found: 'nvidia'
+==> ERROR: module not found: 'nvidia_modeset'
+==> ERROR: module not found: 'nvidia_uvm'
+==> ERROR: module not found: 'nvidia_drm'
+```
+
+**Two reasons for this error:**
+
+**1) Since Early Module Loading is always enabled in chwd, mkinitcpio consistently expects the presence of NVIDIA modules therefore this error arises when these modules are missing.**
+
+**2) You might be missing NVIDIA modules from other installed kernels on your system.**
+
+```sh title='Install the following package to fix this error'
+sudo pacman -S nvidia
 ```

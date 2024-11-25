@@ -46,7 +46,7 @@ Don't worry, setting up Steam with Proton is very simple! In just a few clicks, 
 CachyOS provides various Proton versions that we build & maintain for further performance improvements:
 - `proton-cachyos` `(included in the cachyos-gaming-meta package)` being the one that we develop with added QoL changes + cherry picked patches + compilation optimizations `(x86-64-v3 & x86-64-v4)`
 - `proton-ge-custom`, `proton-tkg-git`, `proton-experimental` and `proton stable releases` are built against native libs.
-- `proton-ge-custom-bin` pulled from AUR. 
+- `proton-ge-custom-bin` pulled from AUR.
 :::
 
 :::tip
@@ -62,7 +62,7 @@ To check if your game is compatible or how does it run with Linux, visit [proton
 - `Proton 9.0.3 or lower` Stable releases from `Valve`. If the game you want to play only works in a previous Proton release.
 - `Proton-GE` Build made by [GloriousEggroll](https://github.com/GloriousEggroll/proton-ge-custom) in some cases it comes in handy.
 
-### What is proton-cachyos? 
+### What is proton-cachyos?
 
 Check out this [explanation about it.](/configuration/gaming#proton-cachyos)
 
@@ -75,7 +75,7 @@ Check out this [explanation about it.](/configuration/gaming#proton-cachyos)
 Don't add multiple `%command%` by using them as separators for multiple launch options.
 
 Example: `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1 %command% game-performance %command% prime-run %command%`
-    - On this case, everything after the first `%command%` is going to be ignored because it's being threated as game arguments therefore only `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1` got recognized as a launch option.
+    - On this case, everything after the first `%command%` is going to be ignored because it's being treated as game arguments therefore only `__GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1` got recognized as a launch option.
 :::
 
 ## Performance tips
@@ -176,7 +176,7 @@ Although it can be used as a systemd wide Wine for Desktop Applications, be awar
 :::
 
 - Based on Valve's bleeding-edge Wine
-- Adds early hotfixes/workarounds for games 
+- Adds early hotfixes/workarounds for games
 - protonfixes
 - Support for umu-launcher
 
@@ -230,7 +230,7 @@ Many games perform optimally with the wine-cachyos runner, so it's advisable to 
 - Right click on the game icon > `Configure` > `Game options` > `Arguments` > Add any argument you need.
 
 ### Does game-performance work on Lutris?
-    
+
 - Yes. Look [here](/configuration/gaming#how-to-add-game-performance-to-steam-lutris-heroic-games-launcher-and-bottles)
 
 ### How can i use wine-cachyos in Lutris?
@@ -264,14 +264,14 @@ Make sure you have umu-launcher installed in your system. Install it with the fo
         - Lutris
             - Disable Lutris Runtime = Enabled
             - Prefer system libraries = Enabled
-    4. Scroll down to `Game execution` and look for the `Environment variables` table 
+    4. Scroll down to `Game execution` and look for the `Environment variables` table
     5. Add these two variables:
-        - KEY `PROTONPATH` 
+        - KEY `PROTONPATH`
             - VALUE `/usr/share/steam/compatibilitytools.d/proton-cachyos/`
         - KEY `UMU_NO_RUNTIME`
             - VALUE `1`
     6. Save changes.
-    
+
     </Steps>
 
     </TabItem>
@@ -294,9 +294,9 @@ Make sure you have umu-launcher installed in your system. Install it with the fo
         - Lutris
             - Disable Lutris Runtime = Enabled
             - Prefer system libraries = Enabled
-    4. Scroll down to `Game execution` and look for the `Environment variables` table 
+    4. Scroll down to `Game execution` and look for the `Environment variables` table
     5. Add these two variables:
-        - KEY `PROTONPATH` 
+        - KEY `PROTONPATH`
             - VALUE `/usr/share/steam/compatibilitytools.d/proton-cachyos/`
         - KEY `UMU_NO_RUNTIME`
             - VALUE `1`

@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tabs [role='tab'][aria-selected='false'] {
+    overflow-x: scroll;
+}
+  
+.tab [role='tab'][aria-selected='false'] {
+    transition: background-color 0.3s ease;
+    border-left: 2px solid #82DCCC;
+    border-bottom: 0px;
+    font-size: 17px;
+    color:rgb(0, 255, 255);
+    /* transition: background-color 0.3s ease; */
+  }
+
+.tab:hover [role='tab'][aria-selected='false'] {
+    background-color:#00f8ec7e;
+    border-top: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    color: #FFFFFF;
+    font-weight: 600;
+  }  
+
+.tab [role='tab'][aria-selected='true'] {
+    border: 2px solid #82DCCC;  
+    border-right: 0px;
+    background-color: #2d8c8f83;
+  }

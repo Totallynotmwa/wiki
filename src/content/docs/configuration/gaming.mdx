@@ -10,27 +10,27 @@ Welcome to the guide for Gaming in CachyOS. We'll guide you through the essentia
 
 ## Prerequisites
 
-Before we dive into the fun stuff, it is essential to ensure that your graphics card drivers are installed and working properly. If your graphics card is not functioning optimally, you won't be able to play games properly.
+:::caution
+Before we dive into the fun stuff, it’s essential to ensure that your graphics card drivers are installed and functioning correctly. If your graphics card isn’t performing optimally, you may encounter issues when playing games.
+:::
 
 ### Essential Packages
 
 To make things easier for you, CachyOS has grouped all the necessary packages for gaming into one meta package that includes all the known stores and extras for gaming in Linux. This makes the installation and setup process for gaming faster and less convoluted for everyone.
 
-Simply run the following command in your terminal:
-
-```sh
+```sh title='Run the following command in a terminal'
 sudo pacman -S cachyos-gaming-meta
 ```
 
 :::note
-The `cachyos-gaming-meta` package installs all the important libraries, packages, plugins, stores such as Steam, Lutris and some tools which are necessary for most games to run and work properly. Check out the [package list](https://github.com/CachyOS/CachyOS-PKGBUILDS/blob/master/cachyos-gaming-meta/PKGBUILD#L10) for more information on what is installing.
+The `cachyos-gaming-meta` package installs all the important libraries, packages, plugins and stores such as Steam, Lutris and some tools which are necessary for most games to run and work properly. Check out the [package list](https://github.com/CachyOS/CachyOS-PKGBUILDS/blob/master/cachyos-gaming-meta/PKGBUILD#L10) for more information on what is installing.
 
-*If you find that there is missing any package, feel free to let the CachyOS team know.*
+*If you find that any packages are missing, feel free to let the CachyOS team know.*
 :::
 
 ## Steam
 
-For Steam users, playing games on CachyOS is a breeze! Simply open Steam and follow the [Proton guide](/configuration/gaming#how-to-enable-proton-support-in-steam), and you're ready to enjoy your games.
+For Steam users, playing games on CachyOS is a breeze!. Open Steam and follow the [Proton guide](/configuration/gaming#how-to-enable-proton-support-in-steam) and you're ready to enjoy your games.
 
 :::note
 Laptop users with discrete NVIDIA GPUs should refer to the following [guide](https://wiki.cachyos.org/configuration/dual_gpu/)
@@ -38,9 +38,15 @@ Laptop users with discrete NVIDIA GPUs should refer to the following [guide](htt
 
 ### How to enable Proton support in Steam
 
-Don't worry, setting up Steam with Proton is very simple! In just a few clicks, you can have it set up and ready to use. Check out the screenshots below for a step-by-step guide.
-
-<MultipleImageComponent images={[import('~/assets/images/Steam1_Screenshot_20230907_071249.png'), import('~/assets/images/Steam2_Screenshot_20230907_071521.png'), import('~/assets/images/Steam3_Screenshot_20230907_072849.png'), import('~/assets/images/Steam4_Screenshot_20230907_072236.png')]} />
+<br />
+<MultipleImageComponent 
+  images={[
+    import('~/assets/images/Steam1_Screenshot_20230907_071249.png'), 
+    import('~/assets/images/Steam2_Screenshot_20230907_071521.png'), 
+    import('~/assets/images/Steam3_Screenshot_20230907_072849.png'), 
+    import('~/assets/images/Steam4_Screenshot_20230907_072236.png')
+  ]}
+/>
 
 :::tip
 CachyOS provides various Proton versions that we build & maintain for further performance improvements:
@@ -89,11 +95,13 @@ EPP/EPB values are set to performance.
 
 CachyOS provides a wrapper script [`game-performance`](https://github.com/CachyOS/CachyOS-Settings/blob/master/usr/bin/game-performance)
 which uses `power-profiles-daemon` to temporarily switch the current power profile to `performance`.
-The `performance` profile increases the system power levels and changes the CPU governor to performance.
+The `performance` profile increases the system power levels and changes the CPU governor to `performance`.
 
 When this script is used to run a game, the system will be set to use the `performance` profile as long as the game is running.
-The previously used power profile will be restored once the game is closed. [Feral's GameMode](https://github.com/FeralInteractive/gamemode)
-has similar behavior but it should not be used as CachyOS ships with [`ananicy-cpp`](https://gitlab.com/ananicy-cpp/ananicy-cpp).
+The previously used power profile will be restored once the game is closed.
+
+*[Feral's GameMode](https://github.com/FeralInteractive/gamemode)
+has similar a behavior but it should not be used as CachyOS already ships with [`ananicy-cpp`](https://gitlab.com/ananicy-cpp/ananicy-cpp)*
 
 ### How to add game-performance to Steam, Lutris, Heroic Games Launcher and Bottles
 
@@ -160,12 +168,12 @@ has similar behavior but it should not be used as CachyOS ships with [`ananicy-c
 ## Proton-CachyOS
 
 Proton-CachyOS is based on the `proton-bleeding-edge branch` and applies a number of patches and changes on top of it.
-- `Wine-staging patches`
-- `Wine Fullscreen FSR`
-- `Reflex support for Wine`
-- `Support for umu-launcher`
+- **Wine-staging patches**
+- **Wine Fullscreen FSR**
+- **Reflex support for Wine**
+- **Support for umu-launcher**
 
-In addition, proton-cachyos is compiled against native system libraries and compiler instructions which can further improve performance.
+*In addition, proton-cachyos is compiled against native system libraries and compiler instructions which can further improve performance.*
 
 ## Wine-CachyOS
 
@@ -175,10 +183,10 @@ This is a solution similar to proton-cachyos, but as standalone version, which c
 Although it can be used as a systemd wide Wine for Desktop Applications, be aware that it might lead to some unexpected behaviors & issues due to being more gaming focused with the patches and changes.
 :::
 
-- Based on Valve's bleeding-edge Wine
-- Adds early hotfixes/workarounds for games
-- protonfixes
-- Support for umu-launcher
+- **Based on Valve's bleeding-edge Wine**
+- **Adds early hotfixes/workarounds for games**
+- **protonfixes**
+- **Support for `umu-launcher`**
 
 **QoL Modifications**
 
@@ -192,6 +200,7 @@ Although it can be used as a systemd wide Wine for Desktop Applications, be awar
 Bottles is an application that allows you to easily manage Windows prefixes on your favorite Linux distributions.
 
 Bottles can also make use of different runners like Lutris and are all manageable within the application. Bottles offers the option of a gaming-oriented prefix.
+
 You can also install dependencies, add EXE files, and use their one-click installers for gaming-related apps like EA App or Battle.net.
 
 ```sh title="How to install Bottles"
@@ -199,16 +208,18 @@ You can also install dependencies, add EXE files, and use their one-click instal
 sudo pacman -S bottles
 ```
 
-If you want to know more about it, check out their [documentation](https://docs.usebottles.com/).
+*If you want to know more about it, check out their [documentation](https://docs.usebottles.com/).*
 
 ## Lutris Introduction & Tips
 
-Lutris serves as a central hub for all your games on CachyOS. With Lutris, you can efficiently manage your game runners, including Wine, Proton, and emulators. You can even customize their parameters!
+Lutris serves as a central hub for all your games on CachyOS.
+ 
+With Lutris, you can efficiently manage your game runners, including Wine, Proton, and emulators.
 
-- You can launch games through Lutris simply by clicking the **Play button**.
-- Or add any game you want using the `+` sign in the top left.
-- You can also launch a store in the `Sources` at the left and connecting your account, it will install said store and then you'll be able to run games from within the store, just like you do on Windows.
-- And more!
+- **You can launch games through Lutris simply by clicking the `Play button`.**
+- **Add any game you want clicking the `+` sign in the top left.**
+- **Set up a store in the `Sources` at the left panel and connecting your account, it will then proceed to install said store and then you'll be able to run games from within the store, just like you do on Windows.**
+- **And more!**
 
 ### Games stores supported in Lutris
 
@@ -218,13 +229,17 @@ Lutris serves as a central hub for all your games on CachyOS. With Lutris, you c
 - [Steam](https://lutris.net/games/steam/)
 - [Ubisoft Connect](https://lutris.net/games/ubisoft-connect/)
 
-### Set the proper Wine runner
+### Setting up wine-cachyos Wine runner
 
-Many games perform optimally with the wine-cachyos runner, so it's advisable to configure it before playing a game.
-
-<MultipleImageComponent images={[import('~/assets/images/lutris-guide-1.png'), import('~/assets/images/lutris-guide-2.png')]} />
+<br />
+<MultipleImageComponent
+  images={[
+    import('~/assets/images/lutris-guide-1.png'),
+    import('~/assets/images/lutris-guide-2.png')]}
+/>
 
 ## Lutris FAQ
+
 ### How can i add a parameter when launching a game? For example -dx11
 
 - Right click on the game icon > `Configure` > `Game options` > `Arguments` > Add any argument you need.
@@ -250,20 +265,20 @@ Make sure you have umu-launcher installed in your system. Install it with the fo
 
     <Steps>
 
-    1. In the main screen of Lutris, click on the cogwheel at the right of `Wine`
-    2. Do the following in the `Runner Options` tab
-        - Wine version = Custom (select executable below)
-        - Custom Wine executable = /usr/bin/umu-run
-        - Use System winetricks = Disabled
-        - Graphics
-            - Enable DXVK = Disabled
-            - Enable VKD3D = Disabled
-            - Enable D3D Extras = Disabled
-            - Enable DXVK-NVAPI / DLSS = Disabled
+    1. In the main screen of Lutris, click on the `cogwheel` at the right of **Wine**
+    2. Do the following changes in the `Runner Options` tab
+        - **Wine version** = *Custom (select executable below)*
+        - **Custom Wine executable** = `/usr/bin/umu-run`
+        - **Use System winetricks** = *Disabled*
+        - **Graphics**
+            - **Enable DXVK** = *Disabled*
+            - **Enable VKD3D** = *Disabled*
+            - **Enable D3D Extras** = *Disabled*
+            - **Enable DXVK-NVAPI / DLSS** = *Disabled*
     3. Go to the `System options` tab
-        - Lutris
-            - Disable Lutris Runtime = Enabled
-            - Prefer system libraries = Enabled
+        - **Lutris**
+            - **Disable Lutris Runtime** = *Enabled*
+            - **Prefer system libraries** = *Enabled*
     4. Scroll down to `Game execution` and look for the `Environment variables` table
     5. Add these two variables:
         - KEY `PROTONPATH`
@@ -281,19 +296,19 @@ Make sure you have umu-launcher installed in your system. Install it with the fo
     <Steps>
 
     1. Right Click in the game you want to configure, then click on `Configure`
-    2. Do the following in the `Runner Options` tab
-        - Wine version = Custom (select executable below)
-        - Custom Wine executable = /usr/bin/umu-run
-        - Use System winetricks = Disabled
-        - Graphics
-            - Enable DXVK = Disabled
-            - Enable VKD3D = Disabled
-            - Enable D3D Extras = Disabled
-            - Enable DXVK-NVAPI / DLSS = Disabled
+    2. Do the following changes in the `Runner Options` tab
+        - **Wine version** = *Custom (select executable below)*
+        - **Custom Wine executable** = `/usr/bin/umu-run`
+        - **Use System winetricks** = *Disabled*
+        - **Graphics**
+            - **Enable DXVK** = *Disabled*
+            - **Enable VKD3D** = *Disabled*
+            - **Enable D3D Extras** = *Disabled*
+            - **Enable DXVK-NVAPI / DLSS** = *Disabled*
     3. Go to the `System options` tab
-        - Lutris
-            - Disable Lutris Runtime = Enabled
-            - Prefer system libraries = Enabled
+        - **Lutris**
+            - **Disable Lutris Runtime** = *Enabled*
+            - **Prefer system libraries** = *Enabled*
     4. Scroll down to `Game execution` and look for the `Environment variables` table
     5. Add these two variables:
         - KEY `PROTONPATH`

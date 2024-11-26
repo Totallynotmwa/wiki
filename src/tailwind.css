@@ -27,3 +27,16 @@
     border-right: 0px;
     background-color: #2d8c8f83;
   }
+
+  starlight-toc > nav > ul > li > a > span {
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+  }
+
+  starlight-toc > nav > ul > li > a[aria-current="true"] > span {
+    color: rgb(0, 255, 255);
+  }
+  
+  starlight-toc > nav > ul > li > a > span:hover {
+    color: #04E16F;
+  }
